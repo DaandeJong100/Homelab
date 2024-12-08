@@ -1,0 +1,28 @@
+---
+- name: Create a new cloud-init VM on Proxmox via SSH
+  hosts: "{{ host }}"
+  gather_facts: false
+  vars:
+    ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+  tasks:
+    - name: creating VM
+      import_tasks: tasks/createVM.yml
+
+
+# - name: Configure the base vm
+#   hosts: vm
+#   become: true
+#   gather_facts: false
+#   vars:
+#     ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+#     ansible_ssh_user: "{{ ansibleUser_name }}"
+#     ansible_ssh_pass: "{{ lookup('env', 'ansibleUser_password') }}"        
+#     ansible_connection: ssh
+#   tasks:
+#      #CORE
+#     - name: Include tasks for installation
+#       import_tasks: tasks/base.yml
+#     - name: Include tasks for installation
+#       import_tasks: tasks/monitoring.yml
+#     - name: Include tasks for installation
+#       import_tasks: tasks/docker.yml
