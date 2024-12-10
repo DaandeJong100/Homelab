@@ -154,7 +154,7 @@
     - name: set tags
       ansible.builtin.command:
         cmd: |
-          qm set {{ new_vm_id }} -tags {{ vm_ip }},{{ storage_type }},{{ vm_variant }},docker
+          qm set {{ new_vm_id }} -tags {{ vm_ip }},{{ storage_type }},{{ vm_variant }},'docker'
         
     - name: Add new VM to the inventory group [vm]
       add_host:
