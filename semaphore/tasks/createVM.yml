@@ -151,10 +151,15 @@
           'other'
           {% endif %}
         
-    - name: set tags
+    - name: set tags individually
       ansible.builtin.command:
         cmd: |
-          qm set {{ new_vm_id }} -tags {{ vm_ip }},{{ storage_type }},{{ vm_variant }}
+          qm set {{ new_vm_id }} -tags "{{ item }}"
+      loop:
+        - "{{ vm_ip }}"
+        - "{{ storage_type }}"
+        - "{{ vm_variant }}"
+        - "docker"
         
     - name: Add new VM to the inventory group [vm]
       add_host:
