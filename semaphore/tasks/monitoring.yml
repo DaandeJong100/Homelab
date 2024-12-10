@@ -31,3 +31,21 @@
       ansible.builtin.systemd:
         name: wazuh-agent
         state: started
+
+    - name: Ensure the monitoring directory exists
+      ansible.builtin.file:
+        path: "/home/ansible/monitoring"
+        state: directory
+        mode: '0755'
+
+    - name: Download the docker-compose.yml file
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/DaandeJong100/Homelab/refs/heads/main/docker/monitoring/docker-compose.yml"
+        dest: "/home/ansible/monitoring/docker-compose.yml"
+        mode: '0644'
+
+    - name: Start the Docker Compose stack
+      ansible.builtin.shell: |
+        sudo docker compose up -d
+      args:
+        chdir: "/home/ansible/monitoring"
