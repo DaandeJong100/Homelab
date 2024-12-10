@@ -43,8 +43,3 @@
           - docker-compose-plugin
         state: present
         update_cache: yes
-
-  handlers:
-    - name: Update apt cache
-      apt:
-        update_cache: yes
