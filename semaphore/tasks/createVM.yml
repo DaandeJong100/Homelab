@@ -140,15 +140,15 @@
       ansible.builtin.set_fact:
         vm_variant: >-
           {% if 100 <= (new_vm_id | int) <= 199 %}
-          'development'
+          development
           {% elif 200 <= (new_vm_id | int) <= 299 %}
-          'production'
+          production
           {% elif 300 <= (new_vm_id | int) <= 399 %}
-          'docker-swarm'
+          docker-swarm
           {% elif 400 <= (new_vm_id | int) <= 499 %}
-          'k8s'
+          k8s
           {% else %}
-          'other'
+          other
           {% endif %}
         
     - name: set tags individually
