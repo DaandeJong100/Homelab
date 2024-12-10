@@ -136,6 +136,25 @@
       ansible.builtin.debug:
         msg: "The clone_vmid for host {{ host }} is {{ clone_vmid }}"
 
+- name: Set VM variant
+  ansible.builtin.set_fact:
+    vm_variant: >-
+      {% if 100 <= (new_vm_id | int) <= 199 %}
+      development
+      {% elif 200 <= (new_vm_id | int) <= 299 %}
+      production
+      {% elif 300 <= (new_vm_id | int) <= 399 %}
+      docker-swarm
+      {% elif 400 <= (new_vm_id | int) <= 499 %}
+      k8s
+      {% else %}
+      other
+      {% endif %}
+        
+    - name: set tags
+      ansible.builtin.command:
+        cmd: |
+          qm set {{ new_vm_id }} -tags {{ vm_ip }},{{ storage_type }},{{ vm_variant }},docker
         
     - name: Add new VM to the inventory group [vm]
       add_host:
