@@ -1,0 +1,16 @@
+---
+- name: Configure the base vm
+  hosts: "{{ host }}"
+  become: true
+  gather_facts: false
+  vars:
+    ansible_ssh_extra_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+    ansible_ssh_user: "{{ ansibleUser_name }}"
+    ansible_ssh_pass: "{{ lookup('env', 'ansibleUser_password') }}"        
+    ansible_connection: ssh
+    compose_dir: "../../docker/{{ stack_name }}"
+    compose_file: "{{ compose_dir }}/docker-compose.yml"
+  tasks:
+     #CORE
+    - name: Include tasks for installation
+      import_tasks: tasks/docker.yml

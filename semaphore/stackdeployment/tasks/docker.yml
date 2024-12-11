@@ -1,0 +1,14 @@
+    - name: Ensure target directory exists on the remote
+      file:
+        path: "/home/{{ ansible_user }}/{{ stack_name }}"
+        state: directory
+
+    - name: Copy docker-compose.yml to the remote server
+      copy:
+        src: "{{ compose_file }}"
+        dest: "/home/{{ ansible_user }}/{{ stack_name }}/docker-compose.yml"
+
+    - name: Deploy stack with Docker Compose
+      shell: "docker-compose -f /home/{{ ansible_user }}/{{ stack_name }}/docker-compose.yml up -d"
+      args:
+        chdir: "/home/{{ ansible_user }}/{{ stack_name }}"
