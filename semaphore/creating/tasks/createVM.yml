@@ -68,9 +68,9 @@
         cmd: |
           qm start {{ new_vm_id }}          
 
-    - name: Wait for 60 seconds to ensure the VM is up
+    - name: Wait for 30 seconds to ensure the VM is up
       ansible.builtin.wait_for:
-        timeout: 60
+        timeout: 30
 
     - name: Ensure 'expect' is installed
       ansible.builtin.package:
