@@ -40,7 +40,7 @@
           # Check if Ip_address is defined
           if [ -n "{{ ip_address | default('') }}" ]; then
             # Use static IP configuration
-            qm set "{{ new_vm_id }}" --ipconfig0 "ip={{ ip_address }}/24,gw={{ gateway | default('') }}" --nameserver 10.0.90.202
+            qm set "{{ new_vm_id }}" --ipconfig0 "ip={{ ip_address }}/24,gw={{ gateway | default('') }}" --nameserver {{ dns }}
           else
             # Use DHCP configuration
             qm set "{{ new_vm_id }}" --ipconfig0 "ip=dhcp" --nameserver 10.0.90.202
@@ -126,7 +126,7 @@
 
     - name: Extract IP Address from Expect Script Output
       ansible.builtin.set_fact:
-        vm_ip: "{{ vm_ip_output.stdout | regex_search('\\d+\\.\\d+\\.\\d+\\.\\d+') }}"
+        vm_ip: "{{ vm_ip_output.stdout | regex_search('\\b(?:[0-9]{1,3}\\.){3}[0-9]{1,3}\\b') }}"
 
     - name: Debug Extracted IP
       ansible.builtin.debug:
