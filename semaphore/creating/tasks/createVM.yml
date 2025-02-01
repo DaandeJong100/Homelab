@@ -43,7 +43,7 @@
             qm set "{{ new_vm_id }}" --ipconfig0 "ip={{ ip_address }}/24,gw={{ gateway | default('') }}" --nameserver {{ dns }}
           else
             # Use DHCP configuration
-            qm set "{{ new_vm_id }}" --ipconfig0 "ip=dhcp" --nameserver 10.0.90.202
+            qm set "{{ new_vm_id }}" --ipconfig0 "ip=dhcp" --nameserver {{ dns }}
           fi          
         mode: '0755'
 
